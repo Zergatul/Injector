@@ -9,7 +9,6 @@ namespace Injector
 {
     class Program
     {
-        // test
         static void Main(string[] args)
         {
             string dllName = @"C:\Users\Zergatul\Documents\Visual Studio 2012\Projects\FakeFiles\Debug\FakeFiles.dll";
