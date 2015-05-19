@@ -39,6 +39,30 @@ namespace Injector
 
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern bool CloseHandle(IntPtr hObject);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern UInt32 WaitForSingleObject(IntPtr hHandle, UInt32 dwMilliseconds);
+
+        [DllImport("Psapi.dll", SetLastError = true)]
+        public static extern bool EnumProcessModulesEx(
+            IntPtr hProcess,
+            IntPtr[] lphModule,
+            UInt32 cb,
+            out int lpcbNeeded,
+            EnumProcessFlagsFilter dwFilterFlag);
+
+        [DllImport("Psapi.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern uint GetModuleBaseNameW(
+            IntPtr hProcess,
+            IntPtr hModule,
+            StringBuilder lpBaseName,
+            uint nSize);
+
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern IntPtr LoadLibraryW(string lpFileName);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool FreeLibrary(IntPtr hModule);
     }
 
     [Flags]
@@ -87,5 +111,13 @@ namespace Injector
         GuardModifierflag = 0x100,
         NoCacheModifierflag = 0x200,
         WriteCombineModifierflag = 0x400
+    }
+
+    public enum EnumProcessFlagsFilter
+    {
+        LIST_MODULES_DEFAULT = 0,
+        LIST_MODULES_32BIT = 1,
+        LIST_MODULES_64BIT = 2,
+        LIST_MODULES_ALL = 3
     }
 }
